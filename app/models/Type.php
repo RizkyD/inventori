@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Inventory;
 
 class Type extends Model
 {
@@ -11,7 +12,7 @@ class Type extends Model
     use SoftDeletes;
     protected $dates=['delete_at'];
 
-    public function types()
+    public function inventories()
     {
         return $this->hasMany(inventory::class);
     }

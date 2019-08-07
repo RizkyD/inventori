@@ -20,7 +20,7 @@ class CreateInventoriesTable extends Migration
             $table->string('desc');
             $table->unsignedBigInteger('id_type');
             $table->unsignedBigInteger('id_room');
-            $table->char('code_inv');
+            $table->string('code_inv');
             $table->unsignedBigInteger('id_user');
             $table->integer('qty');
             $table->softDeletes();
