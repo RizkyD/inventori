@@ -34,7 +34,9 @@ class InventoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->validated();
+        $inventory = app(InventoryService::class)->store($data);
+        return redirect('/inventories')->with('success', 'Data berhasil diinput');
     }
 
     /**

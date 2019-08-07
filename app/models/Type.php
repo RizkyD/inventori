@@ -11,7 +11,7 @@ class Type extends Model
     use SoftDeletes;
     protected $dates=['delete_at'];
 
-    public function type()
+    public function types()
     {
         return $this->hasMany(inventory::class);
     }

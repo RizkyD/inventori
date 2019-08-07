@@ -32,9 +32,12 @@ class BorrowController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    
+    public function store(StoreBorrowRequest $request)
     {
-        //
+        $data = $request->validated();
+        $borrow = app(BorrowService::class)->store($data);
+        return redirect('/borrows')->with('success', 'Data berhasil diinput');
     }
 
     /**

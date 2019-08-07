@@ -11,7 +11,7 @@ class Room extends Model
     use SoftDeletes;
     protected $dates=['delete_at'];
 
-    public function room()
+    public function inventories()
     {
         return $this->hasMany(inventory::class);
     }

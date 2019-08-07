@@ -40,9 +40,15 @@ class User extends Authenticatable
     /**
      * Relation
      */
-    public function user()
+
+    public function inventories()
     {
         return $this->hasMany(Inventory::class);
+    }
+
+    
+    public function borrows()
+    {
         return $this->hasMany(borrow::class);
     }
 }
