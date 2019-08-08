@@ -15,15 +15,9 @@ Route::get('/login', function () {
     return view('auth.login');
 });
 
-Route::get('/', function () {
-    return view('index');
-});
-
 Auth::routes();
-
-// Route::get('/home', 'HomeController@index')->name('home');
-// Route::resource('inventory', 'InventoryController');
-Route::resources([
-    'inventory' => 'InventoryController',
-    'Borrow' => 'BorrowController'
-]);
+Route::group(['middleware' => 'auth'], function () {
+    Route::get('/', function () {
+        return view('index');
+    });   
+});
