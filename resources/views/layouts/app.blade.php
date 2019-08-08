@@ -107,7 +107,7 @@
           <a class="dropdown-item" href="inventory.html">Inventory</a>
           <a class="dropdown-item" href="type.html">Item Types</a>
           <a class="dropdown-item" href="Rooms.html">Rooms</a>
-          <a class="dropdown-item" href="Users.html">Users</a>
+          <a class="dropdown-item" href="{{ url('/users') }}">Users</a>
         </div>
       </li>
       <li class="nav-item">
@@ -178,10 +178,10 @@
 
   <!-- Bootstrap core JavaScript-->
   <script src="{{ asset('js/jquery.min.js') }}"></script>
-  <script src="{{ asset('js/bootstrap.bundle.min.css') }}"></script>
+  <script src="{{ asset('js/bootstrap.bundle.min.js') }}"></script>
 
   <!-- Core plugin JavaScript-->
-  <script src="{{ asset('js/jquery.easing.min.css') }}"></script>
+  <script src="{{ asset('js/jquery.easing.min.js') }}"></script>
 
   <!-- Page level plugin JavaScript-->
   <script src="{{ asset('js/Chart.min.js') }}"></script>
@@ -194,6 +194,8 @@
   <!-- Demo scripts for this page -->
   <script src="{{ asset('js/datatables-demo.js') }}"></script>
   <script src="{{ asset('js/chart-area-demo.js') }}"></script>
+
+  @yield('custom-script')
 
 </body>
 
