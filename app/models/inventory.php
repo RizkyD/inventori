@@ -9,7 +9,7 @@ use App\Models\Room;
 
 class inventory extends Model
 {
-    protected $fillable = [''];
+    protected $fillable = ['name', 'condition', 'desc', 'code_inv', 'qty'];
 
     use SoftDeletes;
     protected $dates=['delete_at'];

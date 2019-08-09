@@ -7,7 +7,7 @@ use App\Models\Inventory;
 
 class Room extends Model
 {
-    protected $fillable = [''];
+    protected $fillable = ['name_room', 'code_room', 'desc'];
 
     use SoftDeletes;
     protected $dates=['delete_at'];

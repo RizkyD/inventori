@@ -7,7 +7,7 @@ use App\Models\User;
 
 class Borrow extends Model
 {
-    protected $fillable = [''];
+    protected $fillable = ['status_borrow'];
 
     use SoftDeletes;
     protected $dates=['delete_at'];

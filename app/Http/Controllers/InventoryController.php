@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\inventory;
 
 class InventoryController extends Controller
 {
@@ -47,7 +48,9 @@ class InventoryController extends Controller
      */
     public function show($id)
     {
-        //
+        $data = inventory::find($id);
+        
+        return view('inventories.show');
     }
 
     /**

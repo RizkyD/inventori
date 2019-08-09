@@ -7,7 +7,7 @@ use App\Models\Inventory;
 
 class Type extends Model
 {
-    protected $fillable = [''];
+    protected $fillable = ['name_type', 'code_type', 'desc'];
 
     use SoftDeletes;
     protected $dates=['delete_at'];
