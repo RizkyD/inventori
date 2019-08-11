@@ -14,30 +14,32 @@
     Add New User
     </div>
     <div class="card-body">
-    <form>
         <div class="form-group">
         <label for="InputName">Name</label>
-        <input type="text" class="form-control" id="InputName" placeholder="Enter Name">
+        <input type="text" class="form-control" id="InputName" name="name" placeholder="Enter Name">
         </div>
         <div class="form-group">
             <label for="InputUsername">Username</label>
-            <input type="text" class="form-control" id="InputUsername" placeholder="Enter Username">
+            <input type="text" class="form-control" id="InputUsername" name="username" placeholder="Enter Username">
         </div>
         <div class="form-group">
             <label for="InputAddress">Address</label>
-            <textarea class="form-control" id="InputAddress" rows="3" placeholder="Enter Address"></textarea>
+            <textarea class="form-control" id="InputAddress" rows="3" name="address" placeholder="Enter Address"></textarea>
+        </div>
+        <div class="form-group">
+            <label for="InputPassword">Password</label>
+            <input type="text" class="form-control" id="InputPassword" name="Password" placeholder="Enter Password">
         </div>
         <div class="form-group" style="max-width:100px;">
             <label for="InputRole">Role</label>
-            <select class="form-control" id="InputRole">
+            <select class="form-control" id="InputRole" name="role">
             <option>Admin</option>
             <option>Operator</option>
             <option>Peminjam</option>
             </select>
         </div>
-        
+        @csrf
         <button type="submit" class="btn btn-primary mb-3"  id="add" >Submit</button>
-    </form>
     </div>
 
 </div>
@@ -96,14 +98,12 @@
                     <td>Jl.Cisekai No.599</td>
                     <td>Admin</td>
                     <td>
-                        <td>
                         <button class="edit-modal btn btn-info" 
                             data-id="1" 
                             data-username="Dediardiansyah"
                             data-name="Dedi Ardiansyah"
                             data-address="Jl.Cisekai No.599"
-                            data-role="admin"
-                        >
+                            data-role="admin">
                             <i class="fas fa-edit"></i>
                         </button>
                         <button class="delete-modal btn btn-danger" 
@@ -111,8 +111,7 @@
                             data-username="Dediardiansyah"
                             data-name="Dedi Ardiansyah"
                             data-address="Jl.Cisekai No.599"
-                            data-role="admin"
-                        >
+                            data-role="admin">
                             <i class="fas fa-trash"></i>
                         </button>
                         <button class="btn btn-info"><i class="fas fa-key"></i></button>
@@ -124,4 +123,42 @@
     </div>
     <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
 </div>
+@endsection
+
+@section('custom-script')
+<script>
+//add new user
+$("#add").click(function() {
+
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+ 
+ $.ajax({
+     type: 'POST',
+     url: '/AddUser',
+     data: {
+         '_token': $('input[name=_token]').val(),
+         'name': $('input[name=name]').val(),
+         'address': $('input[name=address]').val(),
+         'username': $('input[name=username]').val(),
+         'password': $('input[name=password]').val(),
+         'role': $('input[name=role]').val()
+     },
+     success: function(data) {
+         if ((data.errors)) {
+             $('.error').removeClass('hidden');
+             $('.error').text(data.errors.name);
+         } else {
+             $('.error').remove();
+             $('#table').append("<tr class='item" + data.id + "'><td>" + data.id + "</td><td>" + data.name + "</td><td><button class='edit-modal btn btn-info' data-id='" + data.id + "' data-name='" + data.name + "'><span class='glyphicon glyphicon-edit'></span> Edit</button> <button class='delete-modal btn btn-danger' data-id='" + data.id + "' data-name='" + data.name + "'><span class='glyphicon glyphicon-trash'></span> Delete</button></td></tr>");
+         }
+     },
+    });
+$('#InputName').val('');
+});
+
+</script>
 @endsection

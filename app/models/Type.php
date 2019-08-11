@@ -14,6 +14,6 @@ class Type extends Model
 
     public function inventories()
     {
-        return $this->hasMany(inventory::class);
+        return $this->hasMany(Inventory::class);
     }
 }

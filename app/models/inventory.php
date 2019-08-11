@@ -6,26 +6,27 @@ use Illuminate\Database\Eloquent\Model;
 use App\Models\User;
 use App\Models\Type;
 use App\Models\Room;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
-class inventory extends Model
+class Inventory extends Model
 {
-    protected $fillable = [''];
+    protected $fillable = ['name','description','condition','qty','id_type','id_room'];
 
     use SoftDeletes;
     protected $dates=['delete_at'];
     
     public function user()
     {
-        return $this->belongsTo(user::class);
+        return $this->belongsTo(User::class);
     }
 
     public function type()
     {
-        return $this->belongsTo(type::class);
+        return $this->belongsTo(Type::class);
     }
 
     public function room()
     {
-        return $this->belongsTo(room::class);
+        return $this->belongsTo(Room::class);
     }
 }

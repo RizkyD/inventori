@@ -3,11 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Http\Controllers\Services\InventoryService;
-use Validator;
-use Illuminate\Support\Facades\Input;
+use App\Models\User;
 
-class InventoryController extends Controller
+class UserController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,7 +14,7 @@ class InventoryController extends Controller
      */
     public function index()
     {
-        return view('InventoryManagement.index');
+        return view('UsersManagement.index');
     }
 
     /**
@@ -35,23 +33,30 @@ class InventoryController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function AddUser(Request $request)
     {
         $rules = array (
             'name' => 'required',
-            'condition' => 'required',
-            'description' => 'required'
+            'username'=> 'required',
+            'role' => 'required',
+            'password' => 'required'
         );
 
-        $validator = Validator::make( Input::all (), $rules );
-
+        $validator = Validator::make ( Input::all(), $rules );
         if ($validator->fails ())
             return Response::json ( array (
-                'errors' => $validator->getMessageBag ()->toArray ()
-            ) );        
+                        
+                    'errors' => $validator->getMessageBag ()->toArray ()
+            ) );
             else {
-                $data = app(InventoryService::class)->store($request->toArray());
-                return response ()->json ($data);
+                $user = User::create([
+                            'name' => $request->name,
+                            'username' => $request->username,
+                            'address' => $request->address,
+                            'role' => $request->role,
+                            'password' => $request->password,
+                        ]);
+                return response ()->json ( $user );
             }
     }
 

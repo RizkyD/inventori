@@ -17,7 +17,7 @@ class CreateInventoriesTable extends Migration
             $table->bigIncrements('id');
             $table->string('name');
             $table->enum('condition', ['good', 'poor','critical']);
-            $table->string('desc');
+            $table->string('description');
             $table->unsignedBigInteger('id_type');
             $table->unsignedBigInteger('id_room');
             $table->string('code_inv');

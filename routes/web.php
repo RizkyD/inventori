@@ -15,15 +15,19 @@ Route::get('/login', function () {
     return view('auth.login');
 });
 
+
 Route::get('/', function () {
     return view('index');
 });
 
+Route::post('/AddUser','UserController@AddUser');
+Route::get('/users','UserController@index');
+
 Auth::routes();
 
 // Route::get('/home', 'HomeController@index')->name('home');
-// Route::resource('inventory', 'InventoryController');
-Route::resources([
-    'inventory' => 'InventoryController',
-    'Borrow' => 'BorrowController'
-]);
+Route::resource('inventories', 'InventoryController');
+// Route::resources([
+//     'inventory' => 'InventoryController',
+//     'Borrow' => 'BorrowController'
+// ]);

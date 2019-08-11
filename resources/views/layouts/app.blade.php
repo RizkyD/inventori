@@ -12,7 +12,7 @@
   <!-- CSRF Token -->
   <meta name="csrf-token" content="{{ csrf_token() }}">
 
-  <title>Inventory - @yield('title')</title>
+  <title>Inventaris - @yield('title')</title>
 
   <!-- Custom fonts for this template-->
   <script src="https://kit.fontawesome.com/a66b85ae20.js"></script>
@@ -22,6 +22,7 @@
 
   <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
   <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.3/css/responsive.dataTables.min.css">
+  <link rel="stylesheet" href="{{ asset('css/custom.css') }}">
 
 </head>
 
@@ -104,7 +105,7 @@
           <span>Management</span>
         </a>
         <div class="dropdown-menu" aria-labelledby="pagesDropdown">
-          <a class="dropdown-item" href="inventory.html">Inventory</a>
+          <a class="dropdown-item" href="{{ url('/inventories') }}">Inventories</a>
           <a class="dropdown-item" href="type.html">Item Types</a>
           <a class="dropdown-item" href="Rooms.html">Rooms</a>
           <a class="dropdown-item" href="{{ url('/users') }}">Users</a>
