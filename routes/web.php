@@ -15,6 +15,7 @@ Route::get('/login', function () {
     return view('auth.login');
 });
 
+<<<<<<< HEAD
 
 Route::get('/', function () {
     return view('index');
@@ -31,3 +32,11 @@ Route::resource('inventories', 'InventoryController');
 //     'inventory' => 'InventoryController',
 //     'Borrow' => 'BorrowController'
 // ]);
+=======
+Auth::routes();
+Route::group(['middleware' => 'auth'], function () {
+    Route::get('/', function () {
+        return view('index');
+    });   
+});
+>>>>>>> bbde8f750aa33fa54704ed0bd39ed8f281723420
