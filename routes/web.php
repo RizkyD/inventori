@@ -15,7 +15,6 @@ Route::get('/login', function () {
     return view('auth.login');
 });
 
-<<<<<<< HEAD
 
 Route::get('/', function () {
     return view('index');
@@ -23,20 +22,14 @@ Route::get('/', function () {
 
 Route::post('/AddUser','UserController@AddUser');
 Route::get('/users','UserController@index');
+Route::resource('inventories', 'InventoryController');
 
 Auth::routes();
-
 // Route::get('/home', 'HomeController@index')->name('home');
-Route::resource('inventories', 'InventoryController');
-// Route::resources([
-//     'inventory' => 'InventoryController',
-//     'Borrow' => 'BorrowController'
-// ]);
-=======
+
 Auth::routes();
 Route::group(['middleware' => 'auth'], function () {
     Route::get('/', function () {
         return view('index');
     });   
 });
->>>>>>> bbde8f750aa33fa54704ed0bd39ed8f281723420

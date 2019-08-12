@@ -16,14 +16,15 @@ class InventoryService
         $NameCondition = key($QtyCondition);
 
         if (count($QtyCondition) < 2) {
-            return Inventory::create([
+            $inventory = Inventory::create([
             'name'        => $data['name'],
-            'id_type'     => $data['id_type'],
-            'id_room'     => $data['id_room'],
+            'type_id'     => $data['type_id'],
+            'room_id'     => $data['room_id'],
             'condition'   => $NameCondition,
             'qty'         => $QtyCondition[$NameCondition],
             'description' => $data['description']
             ]);
+            return $data = Inventory::with('type')->with('room')->findOrfail($inventory->id);
         }
     }
 

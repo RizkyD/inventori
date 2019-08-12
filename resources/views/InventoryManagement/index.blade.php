@@ -99,8 +99,8 @@ $("#add").click(function() {
      data: {
          '_token': $('input[name=_token]').val(),
          'name': $('input[name=name]').val(),
-         'id_type': $('input[name=type]').val(),
-         'id_room': $('input[name=room]').val(),
+         'type_id': $('input[name=type]').val(),
+         'room_id': $('input[name=room]').val(),
          'condition': conditions,
          'description': $('#InputDescription').val(),
          
@@ -112,7 +112,7 @@ $("#add").click(function() {
              $('.error').text(data.errors.name);
         } else {
              $('.error').remove();
-             $('tbody').append("<tr class='item" + data.id + "'><td>" + data.name + "</td><td>" + data.id_type + "</td><td>" + data.id_room + "</td><td>" + data.condition + "</td><td>" + data.description + "</td><td><button class='edit-modal btn btn-info' data-id='" + data.id + "' data-name='" + data.name + "'data-type='" + data.type + "'data-id='" + data.room + "'data-id='" + data.condition + "'data-id='" + data.description + "'><i class='fas fa-edit'></i></button><button class='delete-modal btn btn-danger' data-id='" + data.id + "' data-name='" + data.name + "'data-type='" + data.type + "'data-id='" + data.room + "'data-id='" + data.condition + "'data-id='" + data.description + "'><i class='fas fa-trash'></i></button></td></tr>");
+             $('tbody').append("<tr class='item" + data.id + "'><td>" + data.name + "</td><td>" + data.type_id + "</td><td>" + data.room_id + "</td><td>" + data.condition + "</td><td>" + data.description + "</td><td><button class='edit-modal btn btn-info' data-id='" + data.id + "' data-name='" + data.name + "'data-type='" + data.type + "'data-id='" + data.room + "'data-id='" + data.condition + "'data-id='" + data.description + "'><i class='fas fa-edit'></i></button><button class='delete-modal btn btn-danger' data-id='" + data.id + "' data-name='" + data.name + "'data-type='" + data.type + "'data-id='" + data.room + "'data-id='" + data.condition + "'data-id='" + data.description + "'><i class='fas fa-trash'></i></button></td></tr>");
         }
      },
      

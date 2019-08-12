@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Services\InventoryService;
 use Validator;
 use Illuminate\Support\Facades\Input;
+use App\Models\Type;
+use App\Models\Inventory;
 
 class InventoryController extends Controller
 {

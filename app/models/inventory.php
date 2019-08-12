@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Inventory extends Model
 {
-    protected $fillable = ['name','description','condition','qty','id_type','id_room'];
+    protected $fillable = ['name','description','condition','qty','type_id','room_id'];
 
     use SoftDeletes;
     protected $dates=['delete_at'];
