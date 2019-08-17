@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Room extends Model
 {
-    protected $fillable = [''];
+    protected $fillable = ['name','desc'];
 
     use SoftDeletes;
     protected $dates=['delete_at'];

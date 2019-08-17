@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Inventory extends Model
 {
-    protected $fillable = ['name','description','condition','qty','type_id','room_id'];
+    protected $fillable = ['room_id','name','desc','qty'];
 
     use SoftDeletes;
     protected $dates=['delete_at'];
@@ -18,11 +18,6 @@ class Inventory extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
-    }
-
-    public function type()
-    {
-        return $this->belongsTo(Type::class);
     }
 
     public function room()
