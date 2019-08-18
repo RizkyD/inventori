@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateInventoriesTable extends Migration
+class CreateTypesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,22 +13,14 @@ class CreateInventoriesTable extends Migration
      */
     public function up()
     {
-        Schema::create('inventories', function (Blueprint $table) {
+        Schema::create('types', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name',50);
             $table->string('desc',100);
-            $table->Integer('qty');
-            $table->unsignedBigInteger('room_id');
-            $table->unsignedBigInteger('type_id');
-            $table->softDeletes();
             $table->timestamps();
-            
+            $table->softDeletes();
         });
 
-        Schema::table('inventories', function ($table) {
-            $table->foreign('room_id')->references('id')->on('rooms');
-            $table->foreign('type_id')->references('id')->on('types');
-        });
     }
 
     /**
@@ -39,7 +31,7 @@ class CreateInventoriesTable extends Migration
     public function down()
     {
         Schema::disableForeignKeyConstraints();
-        Schema::dropIfExists('inventories');
+        Schema::dropIfExists('types');
         Schema::enableForeignKeyConstraints();
     }
 }

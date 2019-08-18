@@ -12,7 +12,7 @@ class Borrow extends Model
     use SoftDeletes;
     protected $dates=['delete_at'];
 
-    public function borrow()
+    public function user()
     {
         return $this->belongsTo(User::class);
     }
