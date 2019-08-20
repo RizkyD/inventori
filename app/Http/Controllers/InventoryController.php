@@ -8,6 +8,7 @@ use Validator;
 use Illuminate\Support\Facades\Input;
 use App\Models\Type;
 use App\Models\Inventory;
+use App\Models\Borrow;
 
 class InventoryController extends Controller
 {

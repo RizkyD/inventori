@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Inventory;
+use Illuminate\Support\Facades\Auth;
+use App\Models\Borrow;
 
 class BorrowController extends Controller
 {
@@ -13,7 +16,9 @@ class BorrowController extends Controller
      */
     public function index()
     {
-        //
+        $data = new Inventory;
+        $data = $data->orderBy('created_at', 'desc')->paginate(10);
+        return view('borrows.index', compact('data'));
     }
 
     /**
@@ -32,12 +37,9 @@ class BorrowController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    
-    public function store(StoreBorrowRequest $request)
+    public function store(Request $request, $id)
     {
-        $data = $request->validated();
-        $borrow = app(BorrowService::class)->store($data);
-        return redirect('/borrows')->with('success', 'Data berhasil diinput');
+        //
     }
 
     /**
@@ -84,4 +86,30 @@ class BorrowController extends Controller
     {
         //
     }
+
+    public function borrow(Request $request, $id)
+    {
+        $inventory = Inventory::findOrFail($id);
+        if (Auth::user()->role == 'borrower') {
+            Borrow::create([
+                'user_id'       => Auth::user()->id,
+                'inventory_id'  => $id,
+                'status'        => 'request',
+                'qty'           => $request->get('qty'),
+                'desc'          => $request->get('desc')
+        ]);
+        } else {
+            Borrow::create([
+                'user_id'       => Auth::user()->id,
+                'inventory_id'  => $id,
+                'status'        => 'borrowed',
+                'qty'           => $request->get('qty'),
+                'desc'          => $request->get('desc')
+            ]);
+        }
+        
+
+        return redirect('/borrows');
+    }
+
 }

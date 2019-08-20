@@ -4,10 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Models\User;
+use App\Models\Inventory;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Borrow extends Model
 {
-    protected $fillable = [''];
+    protected $fillable = ['user_id','inventory_id','qty','status','desc'];
 
     use SoftDeletes;
     protected $dates=['delete_at'];
@@ -17,5 +19,8 @@ class Borrow extends Model
         return $this->belongsTo(User::class);
     }
 
-    
+    public function inventory()
+    {
+        return $this->hasOne(Inventory::class);
+    }
 }

@@ -23,6 +23,11 @@ Route::get('/', function () {
 Route::post('/AddUser','UserController@AddUser');
 Route::get('/users','UserController@index');
 Route::resource('inventories', 'InventoryController');
+route::resource('borrows', 'BorrowController');
+route::post('/borrow/{id}', [
+    'as' => 'borrow',
+    'uses' => 'BorrowController@borrow'
+]);
 
 Auth::routes();
 // Route::get('/home', 'HomeController@index')->name('home');

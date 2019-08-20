@@ -5,7 +5,6 @@ namespace Tests\Unit;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use App\Models\Type;
 use App\Http\Controllers\Services\TypeService;
 
 class TypeServiceTest extends TestCase

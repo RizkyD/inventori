@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Type;
 use App\Models\Room;
+use App\Models\Borrow;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Inventory extends Model
@@ -22,5 +23,10 @@ class Inventory extends Model
     public function type()
     {
         return $this->belongsTo(Type::class);
+    }
+
+    public function borrow()
+    {
+        return $this->hasOne(Borrow::class);
     }
 }

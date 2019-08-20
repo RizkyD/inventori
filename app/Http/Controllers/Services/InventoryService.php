@@ -3,8 +3,6 @@
 namespace App\Http\Controllers\Services;
 
 use App\Models\Inventory;
-use App\Models\Room;
-
 
 class InventoryService
 {
@@ -19,7 +17,7 @@ class InventoryService
         $inventory->update($data);
     }
 
-    public function delete($id)
+    public function destroy($id)
     {
         $inventory = Inventory::findOrFail($id);
         $inventory->delete();
