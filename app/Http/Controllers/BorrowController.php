@@ -89,13 +89,13 @@ class BorrowController extends Controller
 
     public function borrow(Request $request, $id)
     {
-        $inventory = Inventory::findOrFail($id);
+        $qty = $request->get('qty');
         if (Auth::user()->role == 'borrower') {
             Borrow::create([
                 'user_id'       => Auth::user()->id,
                 'inventory_id'  => $id,
                 'status'        => 'request',
-                'qty'           => $request->get('qty'),
+                'qty'           => $qty,
                 'desc'          => $request->get('desc')
         ]);
         } else {
@@ -103,10 +103,16 @@ class BorrowController extends Controller
                 'user_id'       => Auth::user()->id,
                 'inventory_id'  => $id,
                 'status'        => 'borrowed',
-                'qty'           => $request->get('qty'),
+                'qty'           => $qty,
                 'desc'          => $request->get('desc')
             ]);
         }
+        $inventory = Inventory::find($id);
+        $inv_qty = Inventory::where('id', 1)->first()->qty;
+        $inv_qty = $inv_qty - $qty;
+        $inventory->qty = $inv_qty;
+        $inventory->save();
+        
         
 
         return redirect('/borrows');
