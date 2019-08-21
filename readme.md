@@ -27,21 +27,21 @@ Composer
 
 Instalation
 
--Clone Project
--Run Composer Instal
--create .env to root folder project
--Copy env from .env example
--type "php artisan key:generate"
--input on env :
+- Clone Project
+- Run Composer Install in cmd/console
+- create .env to root folder project
+- Copy env from .env example
+- type "php artisan key:generate"
+- input on env :
 DB_DATABASE= (your database name)
 DB_USERNAME= (your mysql username)
 DB_PASSWORD= (your mysql password) *if u dont use password just empty it
--migrate seeder : 'php artisan migrate --seed'
+- migrate seeder : 'php artisan migrate --seed'
 
 Running Application
--open cmd direct file to this project
+- open cmd direct file to this project
 example : cd:/d/inventori *can be put anywhere this project/application
--type "php artisan serve"
--open your browser
--input "localhost:8000"
--enjoy
+- type "php artisan serve"
+- open your browser
+- input "localhost:8000"
+- enjoy
