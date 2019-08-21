@@ -3,8 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\User;
 
-class TypeController extends Controller
+class UserController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -13,7 +14,7 @@ class TypeController extends Controller
      */
     public function index()
     {
-        //
+        return view('UsersManagement.index');
     }
 
     /**
@@ -32,9 +33,31 @@ class TypeController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function AddUser(Request $request)
     {
-        //
+        $rules = array (
+            'name' => 'required',
+            'username'=> 'required',
+            'role' => 'required',
+            'password' => 'required'
+        );
+
+        $validator = Validator::make ( Input::all(), $rules );
+        if ($validator->fails ())
+            return Response::json ( array (
+                        
+                    'errors' => $validator->getMessageBag ()->toArray ()
+            ) );
+            else {
+                $user = User::create([
+                            'name' => $request->name,
+                            'username' => $request->username,
+                            'address' => $request->address,
+                            'role' => $request->role,
+                            'password' => $request->password,
+                        ]);
+                return response ()->json ( $user );
+            }
     }
 
     /**

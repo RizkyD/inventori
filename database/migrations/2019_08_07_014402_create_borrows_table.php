@@ -15,16 +15,17 @@ class CreateBorrowsTable extends Migration
     {
         Schema::create('borrows', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('id_inventory')->nullable();
-            $table->unsignedBigInteger('id_user')->nullable();
+            $table->unsignedBigInteger('inventory_id');
+            $table->unsignedBigInteger('user_id');
             $table->integer('qty');
-            $table->enum('status_borrow', ['returned','borrowed']);
+            $table->enum('status', ['returned','borrowed','request','avaliable','rejected']);
+            $table->string('desc',100);
             $table->timestamps();
         });
 
         Schema::table('borrows', function ($table) {
-            $table->foreign('id_inventory')->references('id')->on('inventories');
-            $table->foreign('id_user')->references('id')->on('users');
+            $table->foreign('inventory_id')->references('id')->on('inventories');
+            $table->foreign('user_id')->references('id')->on('users');
         });
     }
 

@@ -3,29 +3,30 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use App\Models\User;
 use App\Models\Type;
 use App\Models\Room;
+use App\Models\Borrow;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
-class inventory extends Model
+class Inventory extends Model
 {
-    protected $fillable = ['name', 'condition', 'desc', 'code_inv', 'qty'];
+    protected $fillable = ['room_id','type_id','name','desc','qty'];
 
     use SoftDeletes;
     protected $dates=['delete_at'];
-    
-    public function user()
+
+    public function room()
     {
-        return $this->belongsTo(user::class);
+        return $this->belongsTo(Room::class);
     }
 
     public function type()
     {
-        return $this->belongsTo(type::class);
+        return $this->belongsTo(Type::class);
     }
 
-    public function room()
+    public function borrow()
     {
-        return $this->belongsTo(room::class);
+        return $this->hasOne(Borrow::class);
     }
 }

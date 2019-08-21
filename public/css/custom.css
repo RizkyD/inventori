@@ -1,0 +1,9 @@
+#condition .form-control{
+    width: 100%;
+}
+#condition .form-group{
+    padding: 0px;
+}
+#InputPoorCondition,#InputGoodCondition{
+    margin-right: 1rem;
+}

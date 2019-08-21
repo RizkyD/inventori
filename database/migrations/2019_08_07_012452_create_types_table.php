@@ -15,12 +15,12 @@ class CreateTypesTable extends Migration
     {
         Schema::create('types', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('name_type');
-            $table->char('code_type');
-            $table->string('desc');
-            $table->softDeletes();
+            $table->string('name',50);
+            $table->string('desc',100);
             $table->timestamps();
+            $table->softDeletes();
         });
+
     }
 
     /**
