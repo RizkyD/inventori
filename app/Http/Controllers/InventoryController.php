@@ -6,10 +6,10 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Services\InventoryService;
 use Validator;
 use Illuminate\Support\Facades\Input;
-use App\Models\Type;
 use App\Models\Inventory;
-use App\Models\Borrow;
-
+use App\Models\Room;
+use App\Models\Type;
+use Illuminate\Support\Facades\Response;
 class InventoryController extends Controller
 {
     /**
@@ -19,17 +19,11 @@ class InventoryController extends Controller
      */
     public function index()
     {
-        return view('InventoryManagement.index');
-    }
+        $dataInventories = Inventory::with('type')->with('room')->orderBy('id','DESC')->get();
+        $rooms = Room::all();
+        $types = Type::all();
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        return view('InventoryManagement.index', compact('dataInventories','types','rooms'));
     }
 
     /**
@@ -42,44 +36,23 @@ class InventoryController extends Controller
     {
         $rules = array (
             'name' => 'required',
-            'condition' => 'required',
-            'description' => 'required'
+            'qty' => 'required',
+            'desc' => 'required',
+            'type_id' => 'required',
+            'room_id' => 'required'
         );
 
         $validator = Validator::make( Input::all (), $rules );
 
-        if ($validator->fails ())
+        if ($validator->fails ()){
             return Response::json ( array (
                 'errors' => $validator->getMessageBag ()->toArray ()
-            ) );        
-            else {
-                $data = app(InventoryService::class)->store($request->toArray());
-                return response ()->json ($data);
-            }
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        $data = inventory::find($id);
-        
-        return view('inventories.show');
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
+            ) );  
+        } else {
+            $data = app(InventoryService::class)->store($request->toArray());
+            return response ()->json ($data);
+        }
+            
     }
 
     /**
@@ -89,9 +62,16 @@ class InventoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+        $data = Inventory::find($request->id);
+        $data->name =  $request->name;
+        $data->qty = $request->qty;
+        $data->desc = $request->desc;
+        $data->type_id = $request->type_id;
+        $data->room_id = $request->room_id;
+        $data->save();
+        return response ()->json ( $data );
     }
 
     /**
@@ -100,8 +80,9 @@ class InventoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        //
+        Inventory::find ( $request->id )->delete();
+        return response ()->json ();
     }
 }

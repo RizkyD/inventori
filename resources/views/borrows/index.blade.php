@@ -36,9 +36,10 @@
                         <th>-</th>
                         <th>-</th>
                         <th><button type="button" class="btn btn-warning" data-toggle="modal" data-target="#addModal">
-                                            <i class="fas fa-edit"></i>
-                                        </button></th>
-                                        @include('borrows._detail')  
+                                Pinjam
+                            </button>
+                        </th>
+                        @include('borrows._detail')  
                     </tr>
                 @endforeach
                 </tbody>
