@@ -9,11 +9,39 @@
 
 ## Under Development
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as
+Hello,
+these are the few things that you need to do and have before using this application:
 
-## Todo
+Browser.
+Xampp(Windows)/Lampp(linux)
+Text editor ex:Sublime Text,VSC,etc.
+Command Prompt/Terminal
+The project file.
 
-- migration & model initialize
-- Controller + Business Logic 
-- Front End Integration + Routing
-- Test
+
+Server Requirement
+
+PHP >= 7.2
+Composer
+
+
+Instalation
+
+-Clone Project
+-Run Composer Instal
+-create .env to root folder project
+-Copy env from .env example
+-type "php artisan key:generate"
+-input on env :
+DB_DATABASE= (your database name)
+DB_USERNAME= (your mysql username)
+DB_PASSWORD= (your mysql password) *if u dont use password just empty it
+-migrate seeder : 'php artisan migrate --seed'
+
+Running Application
+-open cmd direct file to this project
+example : cd:/d/inventori *can be put anywhere this project/application
+-type "php artisan serve"
+-open your browser
+-input "localhost:8000"
+-enjoy
