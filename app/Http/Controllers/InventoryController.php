@@ -64,7 +64,7 @@ class InventoryController extends Controller
      */
     public function update(Request $request)
     {
-        $data = Inventory::find($request->id);
+        $data = Inventory::with('type')->with('room')->findOrFail($request->id);
         $data->name =  $request->name;
         $data->qty = $request->qty;
         $data->desc = $request->desc;

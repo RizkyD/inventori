@@ -218,7 +218,8 @@ $(document).on('click', '.edit-modal', function() {
     $('#myModal').modal('show');
 });
 
-$('.modal-footer').on('click', '.edit', function() {
+$('.modal-footer').on('click', '.edit', function(e) {
+    e.preventDefault();
  
  $.ajax({
      type: 'put',
@@ -233,8 +234,10 @@ $('.modal-footer').on('click', '.edit', function() {
          'desc': $('#updateDescription').val(),
      },
      success: function(data) {
-         $('.item' + data.id).replaceWith("<tr style='background-color:rgba(40,167,69,.5);' class='item" + data.id + "'><td>" + data.name + "</td><td>" + data.type.name + "</td><td>" + data.room.name + "</td><td>" + data.qty + "</td><td>" + data.desc + "</td><td><button class='edit-modal btn btn-info' data-id='" + data.id + "' data-name='" + data.name + "'data-type='" + data.type_id + "'data-room='" + data.room_id + "'data-qty='" + data.qty + "'data-description='" + data.desc + "'><i class='fas fa-edit'></i></button><button class='delete-modal btn btn-danger' data-id='" + data.id + "'><i class='fas fa-trash'></i></button></td></tr>");
+         $('.item' + data.id).replaceWith("<tr style='background-color:rgba(0,123,255,.5);' class='item" + data.id + "'><td>" + data.name + "</td><td>" + data.type.name + "</td><td>" + data.room.name + "</td><td>" + data.qty + "</td><td>" + data.desc + "</td><td><button class='edit-modal btn btn-info' data-id='" + data.id + "' data-name='" + data.name + "'data-type='" + data.type_id + "'data-room='" + data.room_id + "'data-qty='" + data.qty + "'data-description='" + data.desc + "'><i class='fas fa-edit'></i></button><button class='delete-modal btn btn-danger' data-id='" + data.id + "'><i class='fas fa-trash'></i></button></td></tr>");
      }
+
+     
  });
 });
 
