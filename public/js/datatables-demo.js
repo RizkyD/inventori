@@ -1,6 +1,7 @@
 // Call the dataTables jQuery plugin
 $(document).ready(function() {
   $('#example').DataTable( {
+      order: [[5,'desc']],
       responsive: {
           details: {
               display: $.fn.dataTable.Responsive.display.modal( {
