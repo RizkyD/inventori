@@ -20,7 +20,7 @@ class CreateUsersTable extends Migration
             $table->string('password',100);
             $table->string('reg_number',10)->nullable();
             $table->string('address',75)->nullable();
-            $table->enum('role', ['admin','operator','borrower']);
+            $table->enum('role', ['administrator','operator','borrower']);
             $table->rememberToken();
             $table->timestamps();
         });

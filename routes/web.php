@@ -28,6 +28,12 @@ route::post('/borrow/{id}', [
     'as' => 'borrow',
     'uses' => 'BorrowController@borrow'
 ]);
+Route::get('/profile', 'ProfileController@Index');
+Route::get('/profile/edit','ProfileController@edit');
+Route::put('/profile', [
+    'as'=> 'ProfileController.update',
+    'uses'=> 'ProfileController@update'
+    ]);
 
 Auth::routes();
 // Route::get('/home', 'HomeController@index')->name('home');

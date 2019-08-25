@@ -16,8 +16,7 @@ class BorrowController extends Controller
      */
     public function index()
     {
-        $data = new Inventory;
-        $data = $data->orderBy('created_at', 'desc')->paginate(10);
+        $data = Inventory::orderBy('created_at', 'desc')->paginate(10);
         return view('borrows.index', compact('data'));
     }
 
@@ -108,14 +107,26 @@ class BorrowController extends Controller
             ]);
         }
         $inventory = Inventory::find($id);
-        $inv_qty = Inventory::where('id', 1)->first()->qty;
+        $inv_qty = Inventory::where('id', $id)->first()->qty;
         $inv_qty = $inv_qty - $qty;
         $inventory->qty = $inv_qty;
         $inventory->save();
-        
-        
 
         return redirect('/borrows');
+    }
+
+    public function borrowList()
+    {
+        $data = new Borrow;
+        $data = $data->orderBy('created_at', 'desc')->paginate(10);
+        return view('return.index', compact('data'));
+    }
+
+    public function borrowReturn($id)
+    {
+        $return = Borrow::where('id', $id)->update(['status' =>"returned"]);
+        
+        
     }
 
 }

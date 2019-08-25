@@ -40,11 +40,16 @@
     <ul class="navbar-nav ml-auto mr-0 mr-md-3 my-2 my-md-0">
       <li class="nav-item dropdown no-arrow">
         <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-        SuperUser
+        {{auth::user()->username}}
           <i class="fas fa-user-circle fa-fw"></i>
         </a>
         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
-          <a class="dropdown-item" href="#">profile</a>
+        <div class="dropdown-item">
+          <img src="https://d3ieicw58ybon5.cloudfront.net/full/u/39a3b6ab82e34071ae37a11d7242ed09.jpg" class="float-right" alt="Profile"  height="250" width="250" style="border-radius:50%;">
+        </div>
+        <a class="dropdown=item"><h5 class="text-center">{{auth::user()->name}}</h5></a>
+        <a class="dropdown=item"><h6 class="text-center">{{Str::title(auth::user()->role)}}</h6></a>
+          <a class="dropdown-item" href="{{ url('/profile') }}">profilesssssssssssssssssssssssssssss</a>
           <div class="dropdown-divider"></div>
           <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">Logout</a>
         </div>
