@@ -20,9 +20,14 @@ Route::get('/', function () {
     return view('index');
 });
 
+Route::get('/inventories','InventoryController@index');
+Route::post('/inventories','InventoryController@store');
+Route::put('/inventories','InventoryController@update');
+Route::delete('/inventories','InventoryController@destroy');
+
+
 Route::post('/AddUser','UserController@AddUser');
 Route::get('/users','UserController@index');
-Route::resource('inventories', 'InventoryController');
 route::resource('borrows', 'BorrowController');
 route::post('/borrow/{id}', [
     'as' => 'borrow',

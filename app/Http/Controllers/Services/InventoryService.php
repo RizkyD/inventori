@@ -8,7 +8,8 @@ class InventoryService
 {
     public function store(array $data)
     {
-        return $inventory = Inventory::create($data);
+        $inventory = Inventory::create($data);
+        return $data = Inventory::with('type')->with('room')->findOrfail($inventory->id);
     }
 
     public function update(array $data, $id)
