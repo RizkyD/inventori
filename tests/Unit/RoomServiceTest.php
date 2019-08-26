@@ -9,7 +9,6 @@ use App\Http\Controllers\Services\RoomService;
 
 class RoomServiceTest extends TestCase
 {
-    use RefreshDatabase;
     /**
      * A basic unit test example.
      *

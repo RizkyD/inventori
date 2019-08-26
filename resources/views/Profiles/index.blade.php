@@ -1,8 +1,8 @@
 @extends('layouts.app')
 @section('content')
 <div class="card">
-    <div class="card-header">
-        <h5 class="text-justify">Profile
+    <div class="card-header d-flex justify-content-between">
+        <h5 class="align-middle">Profile</h5>
         <div class="btn btn-success float-right">{{Str::title($user->role)}}</div>
     </div>
     <div class="card-body">

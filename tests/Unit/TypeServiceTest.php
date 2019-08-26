@@ -9,7 +9,6 @@ use App\Http\Controllers\Services\TypeService;
 
 class TypeServiceTest extends TestCase
 {
-    use RefreshDatabase;
     /**
      * A basic unit test example.
      *

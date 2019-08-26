@@ -1,127 +1,132 @@
-@extends('layouts.app')
+@extends('layouts.management')
 
-@section('title','Inventory - Users Management')
+@section('title','Inventory - Inventory Management')
 
 @section('breadcrumb','Management')
 
-@section('breadcrumb-active','Users')
+@section('breadcrumb-active','Inventory')
 
-@section('content')
-<!-- Form Add New User -->
-<div class="card mb-3">
-    <div class="card-header">
-    <i class="fas fa-table"></i>
-    Add New User
-    </div>
-    <div class="card-body">
-        <div class="form-group">
-        <label for="InputName">Name</label>
-        <input type="text" class="form-control" id="InputName" name="name" placeholder="Enter Name">
-        </div>
-        <div class="form-group">
-            <label for="InputUsername">Username</label>
-            <input type="text" class="form-control" id="InputUsername" name="username" placeholder="Enter Username">
-        </div>
-        <div class="form-group">
-            <label for="InputAddress">Address</label>
-            <textarea class="form-control" id="InputAddress" rows="3" name="address" placeholder="Enter Address"></textarea>
-        </div>
-        <div class="form-group">
-            <label for="InputPassword">Password</label>
-            <input type="text" class="form-control" id="InputPassword" name="Password" placeholder="Enter Password">
-        </div>
-        <div class="form-group" style="max-width:100px;">
-            <label for="InputRole">Role</label>
-            <select class="form-control" id="InputRole" name="role">
-            <option>Admin</option>
-            <option>Operator</option>
-            <option>Peminjam</option>
-            </select>
-        </div>
-        @csrf
-        <button type="submit" class="btn btn-primary mb-3"  id="add" >Submit</button>
-    </div>
+@section('addType','Inventory')
 
+@section('form')
+<div class="form-group">
+    <label for="InputName">Name</label>
+    <input type="text" class="form-control" id="InputName" name="name" placeholder="Enter Name">
+</div>
+<div class="form-row">
+    <div class="form-group col-sm-6">
+        <label for="InputType">Select Type:</label>
+        <select class="form-control" id="InputType" name="type">
+            @foreach($types as $type)
+                <option value="{{$type->id}}">{{$type->name}}</option>
+            @endforeach
+        </select>
+    </div>
+    <div class="form-group col-sm-6">
+        <label for="InputRoom">Select Room:</label>
+        <select class="form-control" id="InputRoom" name="room">
+            @foreach($rooms as $room)
+                <option value="{{$room->id}}">{{$room->name}}</option>
+            @endforeach
+        </select>
+    </div>
 </div>
 
-<!-- DataTables Example -->
-<div class="card mb-3">
-    <div class="card-header">
-    <i class="fas fa-table"></i>
-    User List</div>
-    <div class="card-body">
-    <div class="table-responsive">
-        <table id="example" class="table table-striped table-bordered nowrap" style="width:100%">
-            <thead>
-                <tr>
-                    <th>Reg Number</th>
-                    <th>Name</th>
-                    <th>Username</th>
-                    <th>Address</th>
-                    <th>Role</th>
-                    <th>Action</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>12020230</td>
-                    <td>Dedi Ardiansyah</td>
-                    <td>dediardiansyah</td>
-                    <td>Jl.Cisekai No.599</td>
-                    <td>Admin</td>
-                    <td>
-                        <button class="edit-modal btn btn-info" 
-                            data-id="1" 
-                            data-username="Dediardiansyah"
-                            data-name="Dedi Ardiansyah"
-                            data-address="Jl.Cisekai No.599"
-                            data-role="admin"
-                        >
-                            <i class="fas fa-edit"></i>
-                        </button>
-                        <button class="delete-modal btn btn-danger" 
-                            data-id="1" 
-                            data-username="Dediardiansyah"
-                            data-name="Dedi Ardiansyah"
-                            data-address="Jl.Cisekai No.599"
-                            data-role="admin"
-                        >
-                            <i class="fas fa-trash"></i>
-                        </button>
-                        <button class="btn btn-info"><i class="fas fa-key"></i></button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>12020230</td>
-                    <td>Dedi Ardiansyah</td>
-                    <td>dediardiansyah</td>
-                    <td>Jl.Cisekai No.599</td>
-                    <td>Admin</td>
-                    <td>
-                        <button class="edit-modal btn btn-info" 
-                            data-id="1" 
-                            data-username="Dediardiansyah"
-                            data-name="Dedi Ardiansyah"
-                            data-address="Jl.Cisekai No.599"
-                            data-role="admin">
-                            <i class="fas fa-edit"></i>
-                        </button>
-                        <button class="delete-modal btn btn-danger" 
-                            data-id="1" 
-                            data-username="Dediardiansyah"
-                            data-name="Dedi Ardiansyah"
-                            data-address="Jl.Cisekai No.599"
-                            data-role="admin">
-                            <i class="fas fa-trash"></i>
-                        </button>
-                        <button class="btn btn-info"><i class="fas fa-key"></i></button>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+<div class="form-group">
+    <label for="InputQty">Qty</label>
+    <input type="text" class="form-control" id="InputQty" name="qty" placeholder="Enter Qty">
+</div>
+<div class="form-group">
+    <label for="InputDescription">Description</label>
+    <textarea class="form-control" id="InputDescription" rows="4" name="description" placeholder="Enter Description"></textarea>
+</div>
+<button type="submit" class="btn btn-primary mb-3"  id="add" >Submit</button>
+@endsection
+
+@section('headerType','Inventory')
+
+@section('table')
+<table id="example" class="table table-striped table-bordered nowrap" style="width:100%">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Type</th>
+            <th>Room</th>
+            <th>Qty</th>
+            <th>Description</th>
+            <th>Tanggal</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+    @foreach($dataInventories as $dataInventory)
+        <tr class="item{{$dataInventory->id}}">
+            <td>{{$dataInventory->name}}</td>
+            <td>{{$dataInventory->type->name}}</td>
+            <td>{{$dataInventory->room->name}}</td>
+            <td>{{$dataInventory->qty}}</td>
+            <td>{{$dataInventory->desc}}</td>
+            <td>{{$dataInventory->created_at}}</td>
+            <td>
+                <button class='edit-modal btn btn-info' data-id='{{$dataInventory->id}}' data-qty='{{$dataInventory->qty}}' data-name='{{$dataInventory->name}}' data-type='{{$dataInventory->type->id}}' data-room='{{$dataInventory->room->id}}' data-description='{{$dataInventory->desc}}'><i class='fas fa-edit'></i></button>
+                <button class='delete-modal btn btn-danger' data-id='{{$dataInventory->id}}' data-name='{{$dataInventory->name}}'><i class='fas fa-trash'></i></button>
+            </td>
+        </tr>
+    @endforeach
+
+    </tbody>
+</table>
+@endsection
+
+@section('dateUpdate','yesterday at 11:59 PM')
+@section('formModal')
+<form class="form-horizontal" role="form">
+    <div class="form-group">
+        <label class="control-label col-sm-2" for="id">ID:</label>
+        <input type="text" class="form-control" id="id" disabled>
     </div>
+    <div class="form-group">
+        <label for="updateName">Name</label>
+        <input type="text" class="form-control" id="updateName" placeholder="Enter Name">
     </div>
-    <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
+    <div class="form-row">
+        <div class="form-group col-sm-6">
+            <label for="updateType">Select Type:</label>
+            <select class="form-control" id="updateType">
+                @foreach($types as $type)
+                    <option value="{{$type->id}}">{{$type->name}}</option>
+                @endforeach
+            </select>
+        </div>
+        <div class="form-group col-sm-6">
+            <label for="updateRoom">Select Room:</label>
+            <select class="form-control" id="updateRoom" >
+                @foreach($rooms as $room)
+                    <option value="{{$room->id}}">{{$room->name}}</option>
+                @endforeach
+            </select>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="updateQty">Qty</label>
+        <input type="text" class="form-control" id="updateQty" placeholder="Enter Qty">
+    </div>
+    <div class="form-group">
+        <label for="updateDescription">Description</label>
+        <textarea class="form-control" id="updateDescription" rows="4" placeholder="Enter Description"></textarea>
+    </div>
+</form>
+<div class="deleteContent">
+    Are you Sure you want to delete <span class="dname"></span> ? <span class="hidden did"></span>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn actionBtn" data-dismiss="modal">
+        <span id="footer_action_button" class='glyphicon'> </span>
+    </button>
+    <button type="button" class="btn btn-warning" data-dismiss="modal">
+        <span class='glyphicon glyphicon-remove'></span> Close
+    </button>
 </div>
 @endsection
 
@@ -129,6 +134,12 @@
 <script>
 //add new user
 $("#add").click(function() {
+
+    // var conditions = {
+    //     'good': $('input[name=good]').val(),
+    //     'poor': $('input[name=poor]').val(),
+    //     'critical': $('input[name=critical]').val()
+    // }
 
     $.ajaxSetup({
         headers: {
@@ -138,27 +149,103 @@ $("#add").click(function() {
  
  $.ajax({
      type: 'POST',
-     url: '/AddUser',
+     url: '/inventories',
      data: {
          '_token': $('input[name=_token]').val(),
          'name': $('input[name=name]').val(),
-         'address': $('input[name=address]').val(),
-         'username': $('input[name=username]').val(),
-         'password': $('input[name=password]').val(),
-         'role': $('input[name=role]').val()
+         'type_id': $('select[name=type]').val(),
+         'room_id': $('select[name=room]').val(),
+         'qty': $('input[name=qty]').val(),
+        //  'condition': conditions,
+         'desc': $('#InputDescription').val(),
+         
+     },
+
+    success: function(data) {
+        if ((data.errors)) {
+             $('.error').show();
+             $('.error').text(data.errors.name);
+        } else {
+             $('.error').remove();
+             $('tbody').prepend("<tr style='background-color:rgba(40,167,69,.5);' class='item" + data.id + "'><td>" + data.name + "</td><td>" + data.type.name + "</td><td>" + data.room.name + "</td><td>" + data.qty + "</td><td>" + data.desc + "</td><td>" + data.created_at + "</td><td><button class='edit-modal btn btn-info' data-id='" + data.id + "' data-name='" + data.name + "'data-type='" + data.type_id + "'data-room='" + data.room_id + "'data-qty='" + data.qty + "'data-description='" + data.desc + "'><i class='fas fa-edit'></i></button><button class='delete-modal btn btn-danger' data-name'" + data.name + "' data-id='" + data.id + "'><i class='fas fa-trash'></i></button></td></tr>");
+        }
+     },
+     
+    });
+        
+});
+
+$(document).on('click', '.edit-modal', function() {
+    $('#footer_action_button').text(" Update");
+    $('#footer_action_button').addClass('glyphicon-check');
+    $('#footer_action_button').removeClass('glyphicon-trash');
+    $('.actionBtn').addClass('btn-success');
+    $('.actionBtn').removeClass('btn-danger');
+    $('.actionBtn').addClass('edit');
+    $('.modal-title').text('Edit');
+    $('.deleteContent').hide();
+    $('.form-horizontal').show();
+    $('#id').val($(this).data('id'));
+    $('#updateName').val($(this).data('name'));
+    $('#updateQty').val($(this).data('qty'));
+    $('#updateDescription').val($(this).data('description'));
+    $('#updateType').val($(this).data('type'));
+    $('#updateRoom').val($(this).data('room'));
+
+    $('#myModal').modal('show');
+});
+
+$('.modal-footer').on('click', '.edit', function() {
+
+ $.ajax({
+     type: 'put',
+     url: '/inventories',
+     data: {
+         '_token': $('input[name=_token]').val(),
+         'id':$('#id').val(),
+         'name': $('#updateName').val(),
+         'type_id': $('#updateType').val(),
+         'room_id': $('#updateRoom').val(),
+         'qty': $('#updateQty').val(),
+         'desc': $('#updateDescription').val(),
      },
      success: function(data) {
-         if ((data.errors)) {
-             $('.error').removeClass('hidden');
-             $('.error').text(data.errors.name);
-         } else {
-             $('.error').remove();
-             $('#table').append("<tr class='item" + data.id + "'><td>" + data.id + "</td><td>" + data.name + "</td><td><button class='edit-modal btn btn-info' data-id='" + data.id + "' data-name='" + data.name + "'><span class='glyphicon glyphicon-edit'></span> Edit</button> <button class='delete-modal btn btn-danger' data-id='" + data.id + "' data-name='" + data.name + "'><span class='glyphicon glyphicon-trash'></span> Delete</button></td></tr>");
-         }
-     },
-    });
-$('#InputName').val('');
+         $('.item' + data.id).replaceWith("<tr style='background-color:rgba(0,123,255,.5);' class='item" + data.id + "'><td>" + data.name + "</td><td>" + data.type.name + "</td><td>" + data.room.name + "</td><td>" + data.qty + "</td><td>" + data.desc + "</td><td>" + data.created_at + "</td><td><button class='edit-modal btn btn-info' data-id='" + data.id + "' data-name='" + data.name + "'data-type='" + data.type_id + "'data-room='" + data.room_id + "'data-qty='" + data.qty + "'data-description='" + data.desc + "'><i class='fas fa-edit'></i></button><button class='delete-modal btn btn-danger' data-name='" + data.name + "' data-id='" + data.id + "'><i class='fas fa-trash'></i></button></td></tr>");
+
+     }
+
+     
+ });
 });
+
+$(document).on('click', '.delete-modal', function() {
+        $('#footer_action_button').text(" Delete");
+        $('#footer_action_button').removeClass('glyphicon-check');
+        $('#footer_action_button').addClass('glyphicon-trash');
+        $('.actionBtn').removeClass('btn-success');
+        $('.actionBtn').addClass('btn-danger');
+        $('.actionBtn').addClass('delete');
+        $('.modal-title').text('Delete');
+        $('.did').text($(this).data('id'));
+        $('.deleteContent').show();
+        $('.form-horizontal').hide();
+        $('.dname').html($(this).data('name'));
+        $('#myModal').modal('show');
+});
+
+$('.modal-footer').on('click', '.delete', function() {
+        $.ajax({
+            type: 'delete',
+            url: '/inventories',
+            data: {
+                '_token': $('input[name=_token]').val(),
+                'id': $('.did').text()
+            },
+            success: function(data) {
+                $('.item' + $('.did').text()).remove();
+            }
+        });
+    });
 
 </script>
 @endsection

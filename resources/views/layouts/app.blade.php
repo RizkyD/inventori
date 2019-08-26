@@ -45,11 +45,12 @@
         </a>
         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
         <div class="dropdown-item">
-          <img src="https://d3ieicw58ybon5.cloudfront.net/full/u/39a3b6ab82e34071ae37a11d7242ed09.jpg" class="float-right" alt="Profile"  height="250" width="250" style="border-radius:50%;">
+          <img src="https://d3ieicw58ybon5.cloudfront.net/full/u/39a3b6ab82e34071ae37a11d7242ed09.jpg" class="float-right" alt="Profile"  height="200" width="200" style="border-radius:50%;">
         </div>
         <a class="dropdown=item"><h5 class="text-center">{{auth::user()->name}}</h5></a>
-        <a class="dropdown=item"><h6 class="text-center">{{Str::title(auth::user()->role)}}</h6></a>
-          <a class="dropdown-item" href="{{ url('/profile') }}">profilesssssssssssssssssssssssssssss</a>
+        <a class="dropdown=item"><h6 class="text-center text-muted">{{Str::title(auth::user()->role)}}</h6></a>
+          <div class="dropdown-divider mt-3"></div>
+          <a class="dropdown-item" href="{{ url('/profile') }}">profile</a>
           <div class="dropdown-divider"></div>
           <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">Logout</a>
         </div>
@@ -75,18 +76,18 @@
         </a>
         <div class="dropdown-menu" aria-labelledby="pagesDropdown">
           <a class="dropdown-item" href="{{ url('/inventories') }}">Inventories</a>
-          <a class="dropdown-item" href="type.html">Item Types</a>
-          <a class="dropdown-item" href="Rooms.html">Rooms</a>
+          <a class="dropdown-item" href="{{ url('/types') }}">Item Types</a>
+          <a class="dropdown-item" href="{{ url('/rooms') }}">Rooms</a>
           <a class="dropdown-item" href="{{ url('/users') }}">Users</a>
         </div>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="borrowing.html">
+        <a class="nav-link" href="{{ url('/borrows') }}">
           <i class="fas fa-fw fa-chart-area"></i>
           <span>Borrowing Items</span></a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="return.html">
+        <a class="nav-link" href="{{ url('/returns') }}">
           <i class="fas fa-fw fa-table"></i>
           <span>Returns Items</span></a>
       </li>
