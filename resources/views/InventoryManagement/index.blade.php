@@ -62,13 +62,13 @@
     @foreach($dataInventories as $dataInventory)
         <tr class="item{{$dataInventory->id}}">
             <td>{{$dataInventory->name}}</td>
-            <td>{{$dataInventory->type->name}}</td>
-            <td>{{$dataInventory->room->name}}</td>
+            <td>{{$dataInventory->type['name']}}</td>
+            <td>{{$dataInventory->room['name']}}</td>
             <td>{{$dataInventory->qty}}</td>
             <td>{{$dataInventory->desc}}</td>
             <td>{{$dataInventory->created_at}}</td>
             <td>
-                <button class='edit-modal btn btn-info' data-id='{{$dataInventory->id}}' data-qty='{{$dataInventory->qty}}' data-name='{{$dataInventory->name}}' data-type='{{$dataInventory->type->id}}' data-room='{{$dataInventory->room->id}}' data-description='{{$dataInventory->desc}}'><i class='fas fa-edit'></i></button>
+                <button class='edit-modal btn btn-info' data-id='{{$dataInventory->id}}' data-qty='{{$dataInventory->qty}}' data-name='{{$dataInventory->name}}' data-type='{{$dataInventory->type_id}}' data-room='{{$dataInventory->room_id}}' data-description='{{$dataInventory->desc}}'><i class='fas fa-edit'></i></button>
                 <button class='delete-modal btn btn-danger' data-id='{{$dataInventory->id}}' data-name='{{$dataInventory->name}}'><i class='fas fa-trash'></i></button>
             </td>
         </tr>

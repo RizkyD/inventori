@@ -19,7 +19,7 @@ class InventoryController extends Controller
      */
     public function index()
     {
-        $dataInventories = Inventory::with('type')->with('room')->orderBy('id','DESC')->get();
+        $dataInventories = Inventory::orderBy('id','DESC')->get();
         $rooms = Room::all();
         $types = Type::all();
 

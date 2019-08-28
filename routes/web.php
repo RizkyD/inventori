@@ -25,6 +25,21 @@ Route::post('/inventories','InventoryController@store');
 Route::put('/inventories','InventoryController@update');
 Route::delete('/inventories','InventoryController@destroy');
 
+Route::get('/types','TypeController@index');
+Route::post('/types','TypeController@store');
+Route::put('/types','TypeController@update');
+Route::delete('/types','TypeController@destroy');
+
+Route::get('/rooms','RoomController@index');
+Route::post('/rooms','RoomController@store');
+Route::put('/rooms','RoomController@update');
+Route::delete('/rooms','RoomController@destroy');
+
+Route::get('/users','UserController@index');
+Route::post('/users','UserController@store');
+Route::put('/users','UserController@update');
+Route::delete('/users','UserController@destroy');
+
 
 Route::post('/AddUser','UserController@AddUser');
 Route::get('/users','UserController@index');

@@ -3,12 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Http\Controllers\Services\RoomService;
+use App\Http\Controllers\Services\TypeService;
 use Validator;
 use Illuminate\Support\Facades\Input;
-use App\Models\Room;
+use App\Models\Type;
 use Illuminate\Support\Facades\Response;
-class RoomController extends Controller
+class TypeController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,9 +17,9 @@ class RoomController extends Controller
      */
     public function index()
     {
-        $rooms = Room::get();
+        $types = Type::get();
 
-        return view('RoomsManagement.index', compact('rooms'));
+        return view('TypesManagement.index', compact('types'));
     }
 
     /**
@@ -42,7 +42,7 @@ class RoomController extends Controller
                 'errors' => $validator->getMessageBag ()->toArray ()
             ) );  
         } else {
-            $data = app(RoomService::class)->store($request->toArray());
+            $data = app(TypeService::class)->store($request->toArray());
             return response ()->json ($data);
         }
             
@@ -57,7 +57,7 @@ class RoomController extends Controller
      */
     public function update(Request $request)
     {
-        $data = Room::findOrFail($request->id);
+        $data = Type::findOrFail($request->id);
         $data->name =  $request->name;
         $data->desc = $request->desc;
         $data->save();
@@ -72,7 +72,7 @@ class RoomController extends Controller
      */
     public function destroy(Request $request)
     {
-        Room::find($request->id)->delete();
+        Type::find($request->id)->delete();
         return response()->json();
     }
 }

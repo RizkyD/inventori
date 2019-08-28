@@ -16,7 +16,7 @@ class TypeService
         $type = Type::findOrFail($id);
         $type->update($data);
     }
-
+    
     public function destroy($id)
     {
         $type = Type::findOrFail($id);

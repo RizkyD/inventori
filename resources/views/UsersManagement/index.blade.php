@@ -1,75 +1,57 @@
 @extends('layouts.management')
 
-@section('title','Inventory - Inventory Management')
+@section('title','User - User Management')
 
 @section('breadcrumb','Management')
 
-@section('breadcrumb-active','Inventory')
+@section('breadcrumb-active','User')
 
-@section('addType','Inventory')
+@section('addUser','User')
 
 @section('form')
 <div class="form-group">
     <label for="InputName">Name</label>
     <input type="text" class="form-control" id="InputName" name="name" placeholder="Enter Name">
 </div>
-<div class="form-row">
-    <div class="form-group col-sm-6">
-        <label for="InputType">Select Type:</label>
-        <select class="form-control" id="InputType" name="type">
-            @foreach($types as $type)
-                <option value="{{$type->id}}">{{$type->name}}</option>
-            @endforeach
-        </select>
-    </div>
-    <div class="form-group col-sm-6">
-        <label for="InputRoom">Select Room:</label>
-        <select class="form-control" id="InputRoom" name="room">
-            @foreach($rooms as $room)
-                <option value="{{$room->id}}">{{$room->name}}</option>
-            @endforeach
-        </select>
-    </div>
-</div>
-
 <div class="form-group">
-    <label for="InputQty">Qty</label>
-    <input type="text" class="form-control" id="InputQty" name="qty" placeholder="Enter Qty">
+    <label for="InputUsername">Username</label>
+    <input type="text" class="form-control" id="InputUsername" name="username" placeholder="Enter Username">
 </div>
 <div class="form-group">
-    <label for="InputDescription">Description</label>
-    <textarea class="form-control" id="InputDescription" rows="4" name="description" placeholder="Enter Description"></textarea>
+    <label for="InputPassword">Password</label>
+    <input type="text" class="form-control" id="InputPassword" name="password" placeholder="Enter Password">
 </div>
+<div class="form-group col-sm-6">
+        <label for="InputRole">Select Role :</label>
+        <select class="form-control" id="InputRole" name="role">
+                <option value="operator">Operator</option>
+                <option value="borrower">Borrower</option>
+        </select>
+    </div>
 <button type="submit" class="btn btn-primary mb-3"  id="add" >Submit</button>
 @endsection
 
-@section('headerType','Inventory')
+@section('headerUser','User')
 
 @section('table')
 <table id="example" class="table table-striped table-bordered nowrap" style="width:100%">
     <thead>
         <tr>
+            <th>Username</th>
             <th>Name</th>
-            <th>Type</th>
-            <th>Room</th>
-            <th>Qty</th>
-            <th>Description</th>
-            <th>Tanggal</th>
+            <th>Role</th>
             <th>Action</th>
         </tr>
     </thead>
     <tbody>
-    @foreach($dataInventories as $dataInventory)
-        <tr class="item{{$dataInventory->id}}">
-            <td>{{$dataInventory->name}}</td>
-            <td>{{$dataInventory->type->name}}</td>
-            <td>{{$dataInventory->room->name}}</td>
-            <td>{{$dataInventory->qty}}</td>
-            <td>{{$dataInventory->desc}}</td>
-            <td>{{$dataInventory->created_at}}</td>
+    @foreach($users as $d)
+    <tr class="item{{$d->id}}">
+            <td>{{$d->username}}</td>
+            <td>{{$d->name}}</td>
+            <td>{{$d->role}}</td>
             <td>
-                <button class='edit-modal btn btn-info' data-id='{{$dataInventory->id}}' data-qty='{{$dataInventory->qty}}' data-name='{{$dataInventory->name}}' data-type='{{$dataInventory->type->id}}' data-room='{{$dataInventory->room->id}}' data-description='{{$dataInventory->desc}}'><i class='fas fa-edit'></i></button>
-                <button class='delete-modal btn btn-danger' data-id='{{$dataInventory->id}}' data-name='{{$dataInventory->name}}'><i class='fas fa-trash'></i></button>
+                <button class='edit-modal btn btn-info' data-id='{{$d->id}}' data-name='{{$d->name}}' data-username='{{$d->username}}'><i class='fas fa-edit'></i></button>
+                <button class='delete-modal btn btn-danger' data-id='{{$d->id}}' data-name='{{$d->name}}'><i class='fas fa-trash'></i></button>
             </td>
         </tr>
     @endforeach
@@ -89,32 +71,10 @@
         <label for="updateName">Name</label>
         <input type="text" class="form-control" id="updateName" placeholder="Enter Name">
     </div>
-    <div class="form-row">
-        <div class="form-group col-sm-6">
-            <label for="updateType">Select Type:</label>
-            <select class="form-control" id="updateType">
-                @foreach($types as $type)
-                    <option value="{{$type->id}}">{{$type->name}}</option>
-                @endforeach
-            </select>
-        </div>
-        <div class="form-group col-sm-6">
-            <label for="updateRoom">Select Room:</label>
-            <select class="form-control" id="updateRoom" >
-                @foreach($rooms as $room)
-                    <option value="{{$room->id}}">{{$room->name}}</option>
-                @endforeach
-            </select>
-        </div>
-    </div>
 
     <div class="form-group">
-        <label for="updateQty">Qty</label>
-        <input type="text" class="form-control" id="updateQty" placeholder="Enter Qty">
-    </div>
-    <div class="form-group">
-        <label for="updateDescription">Description</label>
-        <textarea class="form-control" id="updateDescription" rows="4" placeholder="Enter Description"></textarea>
+        <label for="updateUsername">Username</label>
+        <textarea class="form-control" id="updateUsername" rows="4" placeholder="Enter Username"></textarea>
     </div>
 </form>
 <div class="deleteContent">
@@ -149,15 +109,13 @@ $("#add").click(function() {
  
  $.ajax({
      type: 'POST',
-     url: '/inventories',
+     url: '/users',
      data: {
          '_token': $('input[name=_token]').val(),
          'name': $('input[name=name]').val(),
-         'type_id': $('select[name=type]').val(),
-         'room_id': $('select[name=room]').val(),
-         'qty': $('input[name=qty]').val(),
-        //  'condition': conditions,
-         'desc': $('#InputDescription').val(),
+         'username': $('#InputUsername').val(),
+         'password': $('#InputPassword').val(),
+         'role': $('#InputRole').val(),
          
      },
 
@@ -167,7 +125,7 @@ $("#add").click(function() {
              $('.error').text(data.errors.name);
         } else {
              $('.error').remove();
-             $('tbody').prepend("<tr style='background-color:rgba(40,167,69,.5);' class='item" + data.id + "'><td>" + data.name + "</td><td>" + data.type.name + "</td><td>" + data.room.name + "</td><td>" + data.qty + "</td><td>" + data.desc + "</td><td>" + data.created_at + "</td><td><button class='edit-modal btn btn-info' data-id='" + data.id + "' data-name='" + data.name + "'data-type='" + data.type_id + "'data-room='" + data.room_id + "'data-qty='" + data.qty + "'data-description='" + data.desc + "'><i class='fas fa-edit'></i></button><button class='delete-modal btn btn-danger' data-name'" + data.name + "' data-id='" + data.id + "'><i class='fas fa-trash'></i></button></td></tr>");
+             $('tbody').prepend("<tr style='background-color:rgba(40,167,69,.5);' class='item" + data.id + "'><td>" + data.username + "</td><td>" + data.name + "</td><td>" + data.role + "</td><td><button class='edit-modal btn btn-info' data-id='" + data.id + "' data-name='" + data.name + "'data-description='" + data.desc + "'><i class='fas fa-edit'></i></button><button class='delete-modal btn btn-danger' data-name'" + data.name + "' data-id='" + data.id + "'><i class='fas fa-trash'></i></button></td></tr>");
         }
      },
      
@@ -187,10 +145,7 @@ $(document).on('click', '.edit-modal', function() {
     $('.form-horizontal').show();
     $('#id').val($(this).data('id'));
     $('#updateName').val($(this).data('name'));
-    $('#updateQty').val($(this).data('qty'));
-    $('#updateDescription').val($(this).data('description'));
-    $('#updateType').val($(this).data('type'));
-    $('#updateRoom').val($(this).data('room'));
+    $('#updateUsername').val($(this).data('username'));
 
     $('#myModal').modal('show');
 });
@@ -199,18 +154,15 @@ $('.modal-footer').on('click', '.edit', function() {
 
  $.ajax({
      type: 'put',
-     url: '/inventories',
+     url: '/users',
      data: {
          '_token': $('input[name=_token]').val(),
          'id':$('#id').val(),
          'name': $('#updateName').val(),
-         'type_id': $('#updateType').val(),
-         'room_id': $('#updateRoom').val(),
-         'qty': $('#updateQty').val(),
-         'desc': $('#updateDescription').val(),
+         'username': $('#updateUsername').val(),
      },
      success: function(data) {
-         $('.item' + data.id).replaceWith("<tr style='background-color:rgba(0,123,255,.5);' class='item" + data.id + "'><td>" + data.name + "</td><td>" + data.type.name + "</td><td>" + data.room.name + "</td><td>" + data.qty + "</td><td>" + data.desc + "</td><td>" + data.created_at + "</td><td><button class='edit-modal btn btn-info' data-id='" + data.id + "' data-name='" + data.name + "'data-type='" + data.type_id + "'data-room='" + data.room_id + "'data-qty='" + data.qty + "'data-description='" + data.desc + "'><i class='fas fa-edit'></i></button><button class='delete-modal btn btn-danger' data-name='" + data.name + "' data-id='" + data.id + "'><i class='fas fa-trash'></i></button></td></tr>");
+         $('.item' + data.id).replaceWith("<tr style='background-color:rgba(0,123,255,.5);' class='item" + data.id + "'><td>" + data.name + "</td><td>" + data.username + "</td><td>" + data.created_at + "</td><td><button class='edit-modal btn btn-info' data-id='" + data.id + "' data-name='" + data.name + "'data-username='" + data.username + "'><i class='fas fa-edit'></i></button><button class='delete-modal btn btn-danger' data-name='" + data.name + "' data-id='" + data.id + "'><i class='fas fa-trash'></i></button></td></tr>");
 
      }
 
@@ -236,7 +188,7 @@ $(document).on('click', '.delete-modal', function() {
 $('.modal-footer').on('click', '.delete', function() {
         $.ajax({
             type: 'delete',
-            url: '/inventories',
+            url: '/users',
             data: {
                 '_token': $('input[name=_token]').val(),
                 'id': $('.did').text()

@@ -3,8 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Controllers\Services\UserService;
+use Validator;
+use Illuminate\Support\Facades\Input;
 use App\Models\User;
-
+use Illuminate\Support\Facades\Response;
 class UserController extends Controller
 {
     /**
@@ -14,17 +17,9 @@ class UserController extends Controller
      */
     public function index()
     {
-        return view('UsersManagement.index');
-    }
+        $users = User::get();
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        return view('usersManagement.index', compact('users'));
     }
 
     /**
@@ -33,53 +28,24 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function AddUser(Request $request)
+    public function store(Request $request)
     {
         $rules = array (
             'name' => 'required',
-            'username'=> 'required',
-            'role' => 'required',
-            'password' => 'required'
+            'username' => 'required'
         );
 
-        $validator = Validator::make ( Input::all(), $rules );
-        if ($validator->fails ())
+        $validator = Validator::make( Input::all (), $rules );
+
+        if ($validator->fails ()){
             return Response::json ( array (
-                        
-                    'errors' => $validator->getMessageBag ()->toArray ()
-            ) );
-            else {
-                $user = User::create([
-                            'name' => $request->name,
-                            'username' => $request->username,
-                            'address' => $request->address,
-                            'role' => $request->role,
-                            'password' => $request->password,
-                        ]);
-                return response ()->json ( $user );
-            }
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
+                'errors' => $validator->getMessageBag ()->toArray ()
+            ) );  
+        } else {
+            $data = app(UserService::class)->store($request->toArray());
+            return response ()->json ($data);
+        }
+            
     }
 
     /**
@@ -89,9 +55,13 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+        $data = User::findOrFail($request->id);
+        $data->name =  $request->name;
+        $data->desc = $request->desc;
+        $data->save();
+        return response ()->json ( $data );
     }
 
     /**
@@ -100,8 +70,9 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        //
+        User::find($request->id)->delete();
+        return response()->json();
     }
 }
