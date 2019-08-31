@@ -5,7 +5,6 @@ namespace App\Models;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use App\Models\Inventory;
 use App\Models\Borrow;
 
 class User extends Authenticatable
@@ -18,7 +17,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'username', 'password', 'role',
+        'name', 'username', 'password', 'role','address','reg_number'
     ];
 
     /**
@@ -42,12 +41,6 @@ class User extends Authenticatable
     /**
      * Relation
      */
-
-    public function inventories()
-    {
-        return $this->hasMany(Inventory::class);
-    }
-
     
     public function borrows()
     {

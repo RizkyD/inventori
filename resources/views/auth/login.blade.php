@@ -31,7 +31,7 @@
           <div class="form-group">
             <div class="form-label-group">
                 <input type="text" id="username" class="form-control @error('username') is-invalid @enderror" name="username" value="{{ old('username') }}" required autocomplete="username" autofocus>
-                <label for="username">{{ __('E-Mail Address') }}</label>
+                <label for="username">{{ __('Username') }}</label>
                 @error('username')
                     <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>

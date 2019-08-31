@@ -1,12 +1,12 @@
 @extends('layouts.management')
 
-@section('title','User - User Management')
+@section('title','Type - Type Management')
 
 @section('breadcrumb','Management')
 
-@section('breadcrumb-active','User')
+@section('breadcrumb-active','Type')
 
-@section('addUser','User')
+@section('addType','Type')
 
 @section('form')
 <div class="form-group">
@@ -14,43 +14,32 @@
     <input type="text" class="form-control" id="InputName" name="name" placeholder="Enter Name">
 </div>
 <div class="form-group">
-    <label for="InputUsername">Username</label>
-    <input type="text" class="form-control" id="InputUsername" name="username" placeholder="Enter Username">
+    <label for="InputDescription">Description</label>
+    <textarea class="form-control" id="InputDescription" rows="4" name="description" placeholder="Enter Description"></textarea>
 </div>
-<div class="form-group">
-    <label for="InputPassword">Password</label>
-    <input type="text" class="form-control" id="InputPassword" name="password" placeholder="Enter Password">
-</div>
-<div class="form-group col-sm-6">
-        <label for="InputRole">Select Role :</label>
-        <select class="form-control" id="InputRole" name="role">
-                <option value="operator">Operator</option>
-                <option value="borrower">Borrower</option>
-        </select>
-    </div>
 <button type="submit" class="btn btn-primary mb-3"  id="add" >Submit</button>
 @endsection
 
-@section('headerUser','User')
+@section('headerType','Type')
 
 @section('table')
 <table id="example" class="table table-striped table-bordered nowrap" style="width:100%">
     <thead>
         <tr>
-            <th>Username</th>
             <th>Name</th>
-            <th>Role</th>
+            <th>Description</th>
+            <th>Created At</th>
             <th>Action</th>
         </tr>
     </thead>
     <tbody>
-    @foreach($users as $d)
+    @foreach($types as $d)
     <tr class="item{{$d->id}}">
-            <td>{{$d->username}}</td>
             <td>{{$d->name}}</td>
-            <td>{{$d->role}}</td>
+            <td>{{$d->desc}}</td>
+            <td>{{$d->created_at}}</td>
             <td>
-                <button class='edit-modal btn btn-info' data-id='{{$d->id}}' data-name='{{$d->name}}' data-username='{{$d->username}}'><i class='fas fa-edit'></i></button>
+                <button class='edit-modal btn btn-info' data-id='{{$d->id}}' data-name='{{$d->name}}' data-description='{{$d->desc}}'><i class='fas fa-edit'></i></button>
                 <button class='delete-modal btn btn-danger' data-id='{{$d->id}}' data-name='{{$d->name}}'><i class='fas fa-trash'></i></button>
             </td>
         </tr>
@@ -73,8 +62,8 @@
     </div>
 
     <div class="form-group">
-        <label for="updateUsername">Username</label>
-        <textarea class="form-control" id="updateUsername" rows="4" placeholder="Enter Username"></textarea>
+        <label for="updateDescription">Description</label>
+        <textarea class="form-control" id="updateDescription" rows="4" placeholder="Enter Description"></textarea>
     </div>
 </form>
 <div class="deleteContent">
@@ -109,13 +98,11 @@ $("#add").click(function() {
  
  $.ajax({
      type: 'POST',
-     url: '/users',
+     url: '/types',
      data: {
          '_token': $('input[name=_token]').val(),
          'name': $('input[name=name]').val(),
-         'username': $('#InputUsername').val(),
-         'password': $('#InputPassword').val(),
-         'role': $('#InputRole').val(),
+         'desc': $('#InputDescription').val(),
          
      },
 
@@ -125,7 +112,7 @@ $("#add").click(function() {
              $('.error').text(data.errors.name);
         } else {
              $('.error').remove();
-             $('tbody').prepend("<tr style='background-color:rgba(40,167,69,.5);' class='item" + data.id + "'><td>" + data.username + "</td><td>" + data.name + "</td><td>" + data.role + "</td><td><button class='edit-modal btn btn-info' data-id='" + data.id + "' data-name='" + data.name + "'data-description='" + data.desc + "'><i class='fas fa-edit'></i></button><button class='delete-modal btn btn-danger' data-name'" + data.name + "' data-id='" + data.id + "'><i class='fas fa-trash'></i></button></td></tr>");
+             $('tbody').prepend("<tr style='background-color:rgba(40,167,69,.5);' class='item" + data.id + "'><td>" + data.name + "</td><td>" + data.desc + "</td><td>" + data.created_at + "</td><td><button class='edit-modal btn btn-info' data-id='" + data.id + "' data-name='" + data.name + "'data-description='" + data.desc + "'><i class='fas fa-edit'></i></button><button class='delete-modal btn btn-danger' data-name'" + data.name + "' data-id='" + data.id + "'><i class='fas fa-trash'></i></button></td></tr>");
         }
      },
      
@@ -145,7 +132,7 @@ $(document).on('click', '.edit-modal', function() {
     $('.form-horizontal').show();
     $('#id').val($(this).data('id'));
     $('#updateName').val($(this).data('name'));
-    $('#updateUsername').val($(this).data('username'));
+    $('#updateDescription').val($(this).data('description'));
 
     $('#myModal').modal('show');
 });
@@ -154,15 +141,15 @@ $('.modal-footer').on('click', '.edit', function() {
 
  $.ajax({
      type: 'put',
-     url: '/users',
+     url: '/types',
      data: {
          '_token': $('input[name=_token]').val(),
          'id':$('#id').val(),
          'name': $('#updateName').val(),
-         'username': $('#updateUsername').val(),
+         'desc': $('#updateDescription').val(),
      },
      success: function(data) {
-         $('.item' + data.id).replaceWith("<tr style='background-color:rgba(0,123,255,.5);' class='item" + data.id + "'><td>" + data.name + "</td><td>" + data.username + "</td><td>" + data.created_at + "</td><td><button class='edit-modal btn btn-info' data-id='" + data.id + "' data-name='" + data.name + "'data-username='" + data.username + "'><i class='fas fa-edit'></i></button><button class='delete-modal btn btn-danger' data-name='" + data.name + "' data-id='" + data.id + "'><i class='fas fa-trash'></i></button></td></tr>");
+         $('.item' + data.id).replaceWith("<tr style='background-color:rgba(0,123,255,.5);' class='item" + data.id + "'><td>" + data.name + "</td><td>" + data.desc + "</td><td>" + data.created_at + "</td><td><button class='edit-modal btn btn-info' data-id='" + data.id + "' data-name='" + data.name + "'data-description='" + data.desc + "'><i class='fas fa-edit'></i></button><button class='delete-modal btn btn-danger' data-name='" + data.name + "' data-id='" + data.id + "'><i class='fas fa-trash'></i></button></td></tr>");
 
      }
 
@@ -188,7 +175,7 @@ $(document).on('click', '.delete-modal', function() {
 $('.modal-footer').on('click', '.delete', function() {
         $.ajax({
             type: 'delete',
-            url: '/users',
+            url: '/types',
             data: {
                 '_token': $('input[name=_token]').val(),
                 'id': $('.did').text()

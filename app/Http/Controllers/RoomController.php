@@ -3,7 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use App\Http\Controllers\Services\RoomService;
+use Validator;
+use Illuminate\Support\Facades\Input;
+use App\Models\Room;
+use Illuminate\Support\Facades\Response;
 class RoomController extends Controller
 {
     /**
@@ -13,17 +17,9 @@ class RoomController extends Controller
      */
     public function index()
     {
-        //
-    }
+        $rooms = Room::get();
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        return view('RoomsManagement.index', compact('rooms'));
     }
 
     /**
@@ -34,29 +30,22 @@ class RoomController extends Controller
      */
     public function store(Request $request)
     {
-        //
-    }
+        $rules = array (
+            'name' => 'required',
+            'desc' => 'required'
+        );
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
+        $validator = Validator::make( Input::all (), $rules );
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
+        if ($validator->fails ()){
+            return Response::json ( array (
+                'errors' => $validator->getMessageBag ()->toArray ()
+            ) );  
+        } else {
+            $data = app(RoomService::class)->store($request->toArray());
+            return response ()->json ($data);
+        }
+            
     }
 
     /**
@@ -66,9 +55,13 @@ class RoomController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+        $data = Room::findOrFail($request->id);
+        $data->name =  $request->name;
+        $data->desc = $request->desc;
+        $data->save();
+        return response ()->json ( $data );
     }
 
     /**
@@ -77,8 +70,9 @@ class RoomController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        //
+        Room::find($request->id)->delete();
+        return response()->json();
     }
 }

@@ -12,21 +12,14 @@ class ProfileController extends Controller
     {
         $user = Auth::user();
 
-        return view('');
+        return view('profiles.index', compact('user'));
     }
 
-    public function edit()
-    {
-        $data = Auth::user();
-
-        return view('');
-    }
-
-    public function update(UpdateProfileRequest $request)
+    public function update(Request $request)
     {
         $data = $request->toArray();
 
         app(ProfileService::class)->update($data);
-        return view('');
+        return redirect('/profile');
     }
 }

@@ -15,22 +15,19 @@ class CreateInventoriesTable extends Migration
     {
         Schema::create('inventories', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('name');
-            $table->enum('condition', ['good', 'poor','critical']);
-            $table->string('desc');
-            $table->unsignedBigInteger('id_type');
-            $table->unsignedBigInteger('id_room');
-            $table->string('code_inv');
-            $table->unsignedBigInteger('id_user');
-            $table->integer('qty');
+            $table->string('name',50);
+            $table->string('desc',100);
+            $table->Integer('qty');
+            $table->unsignedBigInteger('room_id');
+            $table->unsignedBigInteger('type_id');
             $table->softDeletes();
             $table->timestamps();
+            
         });
 
         Schema::table('inventories', function ($table) {
-            $table->foreign('id_type')->references('id')->on('types');
-            $table->foreign('id_room')->references('id')->on('rooms');
-            $table->foreign('id_user')->references('id')->on('users');
+            $table->foreign('room_id')->references('id')->on('rooms');
+            $table->foreign('type_id')->references('id')->on('types');
         });
     }
 

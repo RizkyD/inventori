@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers\Services;
 
-use Illuminate\Support\Facades\Auth;
-use Inventory;
+use App\Models\Inventory;
 
 class InventoryService
 {
     public function store(array $data)
     {
-        $inventory = auth::user()->inventories()->create($data);
+        $inventory = Inventory::create($data);
+        return $data = Inventory::with('type')->with('room')->findOrfail($inventory->id);
     }
 
     public function update(array $data, $id)
@@ -18,7 +18,7 @@ class InventoryService
         $inventory->update($data);
     }
 
-    public function delete($id)
+    public function destroy($id)
     {
         $inventory = Inventory::findOrFail($id);
         $inventory->delete();

@@ -3,12 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Http\Controllers\Services\TypeService;
+use App\Http\Controllers\Services\UserService;
 use Validator;
 use Illuminate\Support\Facades\Input;
-use App\Models\Type;
+use App\Models\User;
 use Illuminate\Support\Facades\Response;
-class TypeController extends Controller
+class UserController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,9 +17,9 @@ class TypeController extends Controller
      */
     public function index()
     {
-        $types = Type::get();
+        $users = User::get();
 
-        return view('TypesManagement.index', compact('types'));
+        return view('usersManagement.index', compact('users'));
     }
 
     /**
@@ -32,7 +32,7 @@ class TypeController extends Controller
     {
         $rules = array (
             'name' => 'required',
-            'desc' => 'required'
+            'username' => 'required'
         );
 
         $validator = Validator::make( Input::all (), $rules );
@@ -42,7 +42,7 @@ class TypeController extends Controller
                 'errors' => $validator->getMessageBag ()->toArray ()
             ) );  
         } else {
-            $data = app(TypeService::class)->store($request->toArray());
+            $data = app(UserService::class)->store($request->toArray());
             return response ()->json ($data);
         }
             
@@ -57,7 +57,7 @@ class TypeController extends Controller
      */
     public function update(Request $request)
     {
-        $data = Type::findOrFail($request->id);
+        $data = User::findOrFail($request->id);
         $data->name =  $request->name;
         $data->desc = $request->desc;
         $data->save();
@@ -72,7 +72,7 @@ class TypeController extends Controller
      */
     public function destroy(Request $request)
     {
-        Type::find($request->id)->delete();
+        User::find($request->id)->delete();
         return response()->json();
     }
 }
