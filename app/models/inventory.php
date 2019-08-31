@@ -25,8 +25,8 @@ class Inventory extends Model
         return $this->belongsTo(Type::class);
     }
 
-    public function borrow()
+    public function borrows()
     {
-        return $this->hasOne(Borrow::class);
+        return $this->hasMany(Borrow::class);
     }
 }

@@ -43,10 +43,15 @@ Route::delete('/users','UserController@destroy');
 
 Route::post('/AddUser','UserController@AddUser');
 Route::get('/users','UserController@index');
-route::resource('borrows', 'BorrowController');
+route::get('/borrows', 'BorrowController@indexBorrow');
+route::get('/returns', 'BorrowController@indexReturn');
 route::post('/borrow/{id}', [
     'as' => 'borrow',
-    'uses' => 'BorrowController@borrow'
+    'uses' => 'BorrowController@fBorrow'
+]);
+route::post('/return/{id}', [
+    'as' => 'return',
+    'uses' => 'BorrowController@freturn'
 ]);
 Route::get('/profile', 'ProfileController@Index');
 Route::get('/profile/edit','ProfileController@edit');
@@ -54,6 +59,8 @@ Route::put('/profile', [
     'as'=> 'ProfileController.update',
     'uses'=> 'ProfileController@update'
     ]);
+    Route::get('/inventory/export_excel', 'InventoryController@export_excel');
+    Route::get('/borrow/export_excel', 'BorrowController@export_excel');
 
 Auth::routes();
 // Route::get('/home', 'HomeController@index')->name('home');

@@ -23,14 +23,13 @@
   <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
   <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.3/css/responsive.dataTables.min.css">
   <link rel="stylesheet" href="{{ asset('css/custom.css') }}">
-
 </head>
 
 <body id="page-top">
 
   <nav class="navbar navbar-expand navbar-dark bg-dark static-top">
 
-    <a class="navbar-brand mr-1" href="index.html">Inventaris</a>
+    <a class="navbar-brand mr-1" href="/">Inventaris</a>
 
     <button class="btn btn-link btn-sm text-white order-1 order-sm-0" id="sidebarToggle" href="#">
       <i class="fas fa-bars"></i>
@@ -64,11 +63,12 @@
     <!-- Sidebar -->
     <ul class="sidebar navbar-nav">
       <li class="nav-item active">
-        <a class="nav-link" href="index.html">
+        <a class="nav-link" href="/">
           <i class="fas fa-fw fa-tachometer-alt"></i>
           <span>Dashboard</span>
         </a>
       </li>
+      @if (auth::user()->role == 'administrator')
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="pagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           <i class="fas fa-tasks"></i>
@@ -81,17 +81,24 @@
           <a class="dropdown-item" href="{{ url('/users') }}">Users</a>
         </div>
       </li>
+      @else
+      @endif
       <li class="nav-item">
         <a class="nav-link" href="{{ url('/borrows') }}">
           <i class="fas fa-fw fa-chart-area"></i>
           <span>Borrowing Items</span></a>
       </li>
+      @if (auth::user()->role == 'borrower')
+      
+@else
       <li class="nav-item">
         <a class="nav-link" href="{{ url('/returns') }}">
           <i class="fas fa-fw fa-table"></i>
           <span>Returns Items</span></a>
       </li>
+      @endif
     </ul>
+    
 
     <div id="content-wrapper">
 

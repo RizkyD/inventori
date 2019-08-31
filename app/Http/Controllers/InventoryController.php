@@ -10,6 +10,8 @@ use App\Models\Inventory;
 use App\Models\Room;
 use App\Models\Type;
 use Illuminate\Support\Facades\Response;
+use App\Exports\InventoryExport;
+use Maatwebsite\Excel\Facades\Excel;
 class InventoryController extends Controller
 {
     /**
@@ -85,4 +87,9 @@ class InventoryController extends Controller
         Inventory::find ( $request->id )->delete();
         return response ()->json ();
     }
+
+    public function export_excel()
+	{
+		return Excel::download(new InventoryExport, 'Inventory.xlsx');
+	}
 }

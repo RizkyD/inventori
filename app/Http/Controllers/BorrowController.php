@@ -6,6 +6,9 @@ use Illuminate\Http\Request;
 use App\Models\Inventory;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Borrow;
+use Carbon\Carbon;
+use App\Exports\BorrowExport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class BorrowController extends Controller
 {
@@ -14,79 +17,18 @@ class BorrowController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function indexBorrow()
     {
         $data = Inventory::orderBy('created_at', 'desc')->paginate(10);
         return view('borrows.index', compact('data'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function indexReturn()
     {
-        //
+        $data = Borrow::where('status', 'borrowed')->orderBy('created_at', 'desc')->paginate(10);
+        return view('returns.index', compact('data'));
     }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
-
-    public function borrow(Request $request, $id)
+    public function fBorrow(Request $request, $id)
     {
         $qty = $request->get('qty');
         if (Auth::user()->role == 'borrower') {
@@ -105,28 +47,39 @@ class BorrowController extends Controller
                 'qty'           => $qty,
                 'desc'          => $request->get('desc')
             ]);
-        }
+            
         $inventory = Inventory::find($id);
         $inv_qty = Inventory::where('id', $id)->first()->qty;
         $inv_qty = $inv_qty - $qty;
         $inventory->qty = $inv_qty;
         $inventory->save();
+        }
 
         return redirect('/borrows');
     }
 
-    public function borrowList()
+    public function fReturn($id)
     {
-        $data = new Borrow;
-        $data = $data->orderBy('created_at', 'desc')->paginate(10);
-        return view('return.index', compact('data'));
+        $item = Borrow::find($id)->inventory_id;
+        $qty = Borrow::find($id)->qty;
+
+        $return = Borrow::find($id);
+        $return->status = 'returned';
+        $return->returned_at = Carbon::now();
+        $return->save();
+
+        $inventory = Inventory::find($item);
+        $inv_qty = Inventory::where('id', $item)->first()->qty;
+        $inv_qty = $inv_qty + $qty;
+        $inventory->qty = $inv_qty;
+        $inventory->save();
+
+        return redirect('/returns');
     }
 
-    public function borrowReturn($id)
-    {
-        $return = Borrow::where('id', $id)->update(['status' =>"returned"]);
-        
-        
-    }
+    public function export_excel()
+	{
+		return Excel::download(new BorrowExport, 'Borrow.xlsx');
+	}
 
 }

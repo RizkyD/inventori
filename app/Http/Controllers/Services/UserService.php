@@ -16,8 +16,7 @@ class UserService
             'role'      => $data['role']
         ]);
     }
-    /**
-     * Update
+    /**     * Update
      */
     public function update(array $data, $id)
     {

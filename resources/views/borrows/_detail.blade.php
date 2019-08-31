@@ -2,7 +2,7 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
     <div class="modal-header">
-    Reimbursement
+    Borrow {{$d->name}}
     </div>
       <div class="modal-body">
       {!! Form::open(['url' => route('borrow', $d->id), 'method' => 'post', 'files' => 'true', 'class' => 'form-horizontal']) !!}
@@ -11,7 +11,7 @@
     {!! Form::label('qty', 'qty', ['class' => 'col-md-2 control-label']) !!}
 
     <div class="col-md-4">
-        {!! Form::text('qty', null, ['class' => 'form-control']) !!}
+        {!! Form::number('qty', null, ['class' => 'form-control']) !!}
         {!! $errors->first('qty', '<p class="help-block">:message</p>') !!}
     </div>
 </div>
@@ -22,6 +22,14 @@
     <div class="col-md-4">
         {!! Form::text('desc', null, ['class' => 'form-control']) !!}
         {!! $errors->first('desc', '<p class="help-block">:message</p>') !!}
+    </div>
+</div>
+<div class="form-group">
+    <label for="date" class="col-md-2 control-label">return date</label>
+
+    <div class="col-md-5">
+        <input class="form-control" name="date" type="date" id="date">
+        
     </div>
 </div>
 

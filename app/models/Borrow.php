@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Borrow extends Model
 {
-    protected $fillable = ['user_id','inventory_id','qty','status','desc'];
+    protected $fillable = ['user_id','inventory_id','qty','status','desc','returned_schedule'];
 
     use SoftDeletes;
     protected $dates=['delete_at'];
@@ -21,6 +21,6 @@ class Borrow extends Model
 
     public function inventory()
     {
-        return $this->hasOne(Inventory::class);
+        return $this->belongsTo(Inventory::class);
     }
 }

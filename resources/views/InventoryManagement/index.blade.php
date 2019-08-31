@@ -46,6 +46,9 @@
 @section('headerType','Inventory')
 
 @section('table')
+@if (auth::user()->role == 'administrator')
+<a href="/inventory/export_excel" class="btn btn-success my-3" target="_blank">EXPORT EXCEL</a>
+@endif
 <table id="example" class="table table-striped table-bordered nowrap" style="width:100%">
     <thead>
         <tr>

@@ -20,6 +20,9 @@ class CreateBorrowsTable extends Migration
             $table->integer('qty');
             $table->enum('status', ['returned','borrowed','request','avaliable','rejected']);
             $table->string('desc',100);
+            $table->timestamp('return_schedule');
+            $table->timestamp('returned_at')->nullable();
+            $table->softDeletes();
             $table->timestamps();
         });
 
