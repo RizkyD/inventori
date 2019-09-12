@@ -8,7 +8,7 @@ class RoomService
 {
     public function store(array $data)
     {
-        return $room = Room::create($data);
+        return Room::create($data);
     }
 
     public function update(array $data, $id)

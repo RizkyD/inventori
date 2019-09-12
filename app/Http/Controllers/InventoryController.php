@@ -51,8 +51,7 @@ class InventoryController extends Controller
                 'errors' => $validator->getMessageBag ()->toArray ()
             ) );  
         } else {
-            $data = app(InventoryService::class)->store($request->toArray());
-            return response ()->json ($data);
+            return response ()->json (app(InventoryService::class)->store($request->toArray()));
         }
             
     }

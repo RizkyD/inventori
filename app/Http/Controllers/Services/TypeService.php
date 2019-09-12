@@ -8,7 +8,7 @@ class TypeService
 {
     public function store(array $data)
     {
-        return $type = Type::create($data);
+        return Type::create($data);
     }
 
     public function update(array $data, $id)

@@ -42,8 +42,7 @@ class UserController extends Controller
                 'errors' => $validator->getMessageBag ()->toArray ()
             ) );  
         } else {
-            $data = app(UserService::class)->store($request->toArray());
-            return response ()->json ($data);
+            return response()->json(app(UserService::class)->store($request->toArray()));
         }
             
     }
@@ -59,9 +58,9 @@ class UserController extends Controller
     {
         $data = User::findOrFail($request->id);
         $data->name =  $request->name;
-        $data->desc = $request->desc;
+        $data->username = $request->username;
         $data->save();
-        return response ()->json ( $data );
+        return response()->json($data);
     }
 
     /**

@@ -42,8 +42,7 @@ class RoomController extends Controller
                 'errors' => $validator->getMessageBag ()->toArray ()
             ) );  
         } else {
-            $data = app(RoomService::class)->store($request->toArray());
-            return response ()->json ($data);
+            return response()->json(app(RoomService::class)->store($request->toArray()));
         }
             
     }

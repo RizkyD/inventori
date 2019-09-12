@@ -9,7 +9,7 @@ class UserService
 
     public function store(array $data)
     {
-        $user = User::create([
+        return User::create([
             'name'      => $data['name'],
             'username'  => $data['username'],
             'password'  => bcrypt($data['password']),

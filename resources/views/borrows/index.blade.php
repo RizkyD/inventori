@@ -38,7 +38,7 @@
                         <th>{{$d->qty}}</th>
                         <th>-</th>
                         <th>-</th>
-                        <th><button type="button" class="btn btn-warning" data-toggle="modal" data-target="#addModal">
+                        <th><button type="button" class="btn btn-warning" data-toggle="modal" data-target="#addModal{{$d->id}}">
                                 Pinjam
                             </button>
                         </th>

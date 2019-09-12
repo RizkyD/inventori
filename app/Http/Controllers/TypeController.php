@@ -42,8 +42,7 @@ class TypeController extends Controller
                 'errors' => $validator->getMessageBag ()->toArray ()
             ) );  
         } else {
-            $data = app(TypeService::class)->store($request->toArray());
-            return response ()->json ($data);
+            return response ()->json (app(TypeService::class)->store($request->toArray()));
         }
             
     }
